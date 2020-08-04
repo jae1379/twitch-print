@@ -33,13 +33,13 @@ p = printer.ThermalPrinter()
 from textwrap import wrap
 
 # import for interfacing with the Pi system for powering off, as in https://www.raspberrypi.org/forums/viewtopic.php?t=133665
-from subprocess import call
+### from subprocess import call
 
 # A little flag that I can flip if I want it to not actually shut the system down on button press
-reallyShutDown = True
+### reallyShutDown = True
 
 # The button is attached to pin 37 in the "Board" numbering scheme, as I set above
-button_pin = 37
+### button_pin = 37
 
 # ------ From the Twitchbot Instructable: ------ 
 # a regex for parsing the returned message; compile it here and use it in the message receiving bit
@@ -79,7 +79,7 @@ def printFormatted(text, characters=30):
 		p.print_text(line+"\n")
 	p.linefeed(4)
 	p.sleep()
-
+'''
 # A regex to determine whether something is a Library of Congress call number (or one of the Hunt Library location tags)
 # I developed/tested this with the validdator_tester.py code.
 dewey_validator=re.compile(r"([a-zA-Z]{1,3}\s*[\d\.]{1,7}\s*\.[a-zA-Z]\d{1,5}\s*[\w]{2,4}\s*\d{0,4}|(STACKS|OVRSZQ)[\-2-4]{0,2})")
@@ -93,8 +93,10 @@ def maybePrintMessages(message, sender, socket):
 			text = text + match[0] + " \n\n"
 		printFormatted(text)
 		chat(socket, "Received from "+text)
-
+		
+		
 # This function is called whenever the GPIO system detects a falling edge on the button pin (see line 120)
+
 def shutdown(whatever):
 	print "falling edge on pin "+str(button_pin)
 	# hardware buttons often see little stray signals, but since this button is literally turning the whole computer off,
@@ -119,7 +121,8 @@ GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # When a falling edge is detected on pin 37, regardless of whatever else is happening in the program, 
 # the callback function will be run (in this case, "shutdown")
-GPIO.add_event_detect(button_pin, GPIO.FALLING, callback=shutdown, bouncetime=300)
+GPIO.add_event_detect(button_pin, GPIO.FALLING, callback=shutdown, bouncetime=300) 
+'''
 # ------ end of hardware functions ------ 
 
 # This function handles the raw responses gathered in the read_loop. If it sees a 'ping', it'll 'pong'.
